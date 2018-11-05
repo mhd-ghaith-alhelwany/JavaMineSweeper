@@ -10,8 +10,38 @@ package minesweeper;
  * @author Ghaith
  */
 public class PlayerMove {
-    MoveResult moveResult;
-    MoveType moveType;
-    Square square;
-    Player player;
+    private MoveResult moveResult;
+    private MoveType moveType;
+    private SquarePlace squarePlace;
+    private Player player;
+    
+    public PlayerMove(MoveResult moveResult, MoveType moveType, SquarePlace squarePlace, Player player){
+        this.moveResult = moveResult;
+        this.moveType = moveType;
+        this.squarePlace = squarePlace;
+        this.player = player;
+    }
+    
+    public PlayerMove(MoveType moveType, SquarePlace squarePlace){
+        this.moveType = moveType;
+        this.squarePlace = squarePlace;
+    }
+    
+    public void setResult(MoveResult moveResult){
+        this.moveResult = moveResult;
+    }
+    public void setPlayer(Player player){
+        this.player = player;
+    }
+    
+    public MoveType getMoveType(){
+        return this.moveType;
+    }
+    
+    public MoveResult getMoveResult(){
+        return this.moveResult;
+    }
+    public SquarePlace getSquarePlace(){
+        return this.squarePlace;
+    }
 }

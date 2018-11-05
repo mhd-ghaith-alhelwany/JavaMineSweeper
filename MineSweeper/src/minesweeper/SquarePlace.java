@@ -10,7 +10,7 @@ package minesweeper;
  * @author Ghaith
  */
 public class SquarePlace {
-    private int i, j;
+    public int i, j;
 
     public SquarePlace(int i, int j) {
         this.i = i;
