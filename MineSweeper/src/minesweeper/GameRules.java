@@ -12,7 +12,7 @@ public class GameRules {
     private static final Map<Pair<MoveType, MoveResult>, Integer> scoreRules = new HashMap<Pair<MoveType, MoveResult>, Integer>();
     private static final Map<Pair<SquareStatus, Mine>, Integer> printChars = new HashMap<Pair<SquareStatus, Mine>, Integer>();
     
-    public static void initialize(){
+    static{
         scoreRules.put(new Pair<>(MoveType.FLAG, MoveResult.RIGHT), +10);
         scoreRules.put(new Pair<>(MoveType.FLAG, MoveResult.WRONG), -20);
         scoreRules.put(new Pair<>(MoveType.OPEN, MoveResult.RIGHT), +20);
@@ -25,6 +25,7 @@ public class GameRules {
         printChars.put(new Pair<>(SquareStatus.FLAGGED, Mine.EMPTY), (int)'!');
         printChars.put(new Pair<>(SquareStatus.FLAGGED, Mine.MINE), (int)'!');
         printChars.put(new Pair<>(SquareStatus.OPEN, Mine.MINE), (int)'*');
+        printChars.put(new Pair<>(SquareStatus.OPEN, Mine.EMPTY), 0);
     }
     
     public static char getPrintChar(SquareStatus squareStatus, Mine mine){

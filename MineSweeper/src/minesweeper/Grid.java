@@ -16,7 +16,7 @@ public class Grid {
         initializeGrid();
     }
     
-    private boolean validSquare(int i, int j){
+    public boolean validSquare(int i, int j){
         if(i < 0) return false;
         if(j < 0) return false;
         if(i >= this.length) return false;

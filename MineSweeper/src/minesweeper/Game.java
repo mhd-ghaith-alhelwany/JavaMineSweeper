@@ -19,7 +19,6 @@ public abstract class Game {
         this.player1 = new ConsolePlayer(Color.BLUE, new Score(0), PlayerStatus.WAITING);
         if(gametype == GameType.MULTI_PLAYER) 
             this.player2 = new ConsolePlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
-        GameRules.initialize();
         this.start();
     }
     
@@ -28,23 +27,27 @@ public abstract class Game {
             this.updateGame();
             PlayerMove player1Move = player1.pickSquare();
             this.checkPlayerMove(player1, player1Move);
-            if(grid.getSquare(player1Move.getSquarePlace().i, player1Move.getSquarePlace().j).setSquareState(player1Move))
+            if(player1Move.getMoveResult() != null && grid.getSquare(player1Move.getSquarePlace().i, player1Move.getSquarePlace().j).setSquareState(player1Move))
                 player1.getScore().changeScore(GameRules.getScoreChange(player1Move));
             else
                 player1.getScore().changeScore(GameRules.getWrongMoveScoreChange());
             
             this.updateGame();
-            PlayerMove player2Move = player1.pickSquare();
-            this.checkPlayerMove(player1, player2Move);
-            if(grid.getSquare(player2Move.getSquarePlace().i, player2Move.getSquarePlace().j).setSquareState(player2Move))
-                player1.getScore().changeScore(GameRules.getScoreChange(player2Move));
+            PlayerMove player2Move = player2.pickSquare();
+            this.checkPlayerMove(player2, player2Move);
+            if(player2Move.getMoveResult() != null && grid.getSquare(player2Move.getSquarePlace().i, player2Move.getSquarePlace().j).setSquareState(player2Move))
+                player2.getScore().changeScore(GameRules.getScoreChange(player2Move));
             else
-                player1.getScore().changeScore(GameRules.getWrongMoveScoreChange());
+                player2.getScore().changeScore(GameRules.getWrongMoveScoreChange());
             
         }
     }
     
     public void checkPlayerMove(Player player, PlayerMove playerMove){
+        if(!grid.validSquare(playerMove.getSquarePlace().i, playerMove.getSquarePlace().j)){
+            playerMove.setResult(null);
+            return;
+        }
         playerMove.setPlayer(player);
         if(playerMove.getMoveType() == MoveType.FLAG)
             if(grid.getSquare(playerMove.getSquarePlace().i,playerMove.getSquarePlace().j).getMine() == Mine.MINE) 
