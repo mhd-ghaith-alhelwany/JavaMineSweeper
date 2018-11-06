@@ -33,8 +33,8 @@ public class GameRules {
         return (char)c;
     }
     public static MoveType getMoveType(char c){
-        if(c == '*') return MoveType.FLAG;
-        else if(c == '^') return MoveType.UNFLAG;
+        if(c == 'f') return MoveType.FLAG;
+        else if(c == 'u') return MoveType.UNFLAG;
         else return MoveType.OPEN;
     }
     public static int getWrongMoveScoreChange(){

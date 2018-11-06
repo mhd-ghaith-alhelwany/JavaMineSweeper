@@ -15,7 +15,7 @@ public class MineSweeper {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new ConsoleGame(4, 4, 1, GameType.MULTI_PLAYER);
+        new ConsoleGame(4, 5, 2, GameType.MULTI_PLAYER);
     }
     
 }

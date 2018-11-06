@@ -27,7 +27,7 @@ public abstract class Game {
             this.updateGame();
             PlayerMove player1Move = player1.pickSquare();
             this.checkPlayerMove(player1, player1Move);
-            if(player1Move.getMoveResult() != null && grid.getSquare(player1Move.getSquarePlace().i, player1Move.getSquarePlace().j).setSquareState(player1Move))
+            if(player1Move.getMoveResult() != null && grid.setSquareStatus(player1Move.getSquarePlace().i, player1Move.getSquarePlace().j , player1Move))
                 player1.getScore().changeScore(GameRules.getScoreChange(player1Move));
             else
                 player1.getScore().changeScore(GameRules.getWrongMoveScoreChange());
@@ -35,7 +35,7 @@ public abstract class Game {
             this.updateGame();
             PlayerMove player2Move = player2.pickSquare();
             this.checkPlayerMove(player2, player2Move);
-            if(player2Move.getMoveResult() != null && grid.getSquare(player2Move.getSquarePlace().i, player2Move.getSquarePlace().j).setSquareState(player2Move))
+            if(player2Move.getMoveResult() != null && grid.setSquareStatus(player2Move.getSquarePlace().i, player2Move.getSquarePlace().j , player2Move))
                 player2.getScore().changeScore(GameRules.getScoreChange(player2Move));
             else
                 player2.getScore().changeScore(GameRules.getWrongMoveScoreChange());

@@ -52,4 +52,30 @@ public class Grid {
     public Square getSquare(int i, int j){
         return grid[i][j];
     }
+    
+    private boolean visited[][];
+    private void floodFill(int A, int B){
+        int moves[] = {0, 1, -1};
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                int a = A + moves[i];
+                int b = B + moves[j];
+                if(validSquare(a, b) && !visited[a][b] && this.grid[a][b].getMine() == Mine.EMPTY){
+                    this.visited[a][b] = true;
+                    this.grid[a][b].setSquareState(new PlayerMove(MoveType.OPEN, null));
+                    if(this.grid[a][b].getSurroundingMines() == 0)
+                        floodFill(a, b);
+                }
+            }
+        }
+    }
+    
+    public boolean setSquareStatus(int i, int j, PlayerMove playerMove){
+        boolean done = this.grid[i][j].setSquareState(playerMove);
+        if(playerMove.getMoveType() == MoveType.OPEN && done){
+            this.visited = new boolean[this.length][this.width];
+            this.floodFill(i, j);
+        }
+        return done;
+    }
 }
