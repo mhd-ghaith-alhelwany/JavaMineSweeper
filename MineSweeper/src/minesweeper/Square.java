@@ -34,22 +34,22 @@ public class Square {
         return true;
     }
     
-    public boolean setSquareState(PlayerMove playerMove){
+    public void setSquareState(PlayerMove playerMove) throws IllegalMoveException{
         if(playerMove.getMoveType() == MoveType.FLAG)
             if(this.squareStatus == SquareStatus.CLOSED){
                 this.squareStatus = SquareStatus.FLAGGED;
-                return true;
-            }else return false;
+                return;
+            }else throw new IllegalMoveException();
         else if(playerMove.getMoveType() == MoveType.UNFLAG)
             if(this.squareStatus == SquareStatus.FLAGGED){
                 this.squareStatus = SquareStatus.CLOSED;
-                return true;
-            }else return false;
+                return;
+            }else throw new IllegalMoveException();
         else
             if(this.squareStatus == SquareStatus.CLOSED){
                 this.squareStatus = SquareStatus.OPEN;
-                return true;
-            }else return false;
+                return;
+            }else throw new IllegalMoveException();
     }
     
     public Mine getMine(){

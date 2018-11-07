@@ -32,5 +32,19 @@ public class ConsoleGame extends Game{
         }
         System.out.println("");
     }
+
+    @Override
+    public void finishGame() {
+        System.out.println("Game over");
+        System.out.print("Player 1: ");
+        System.out.println(player1.getScore().getScore());
+        System.out.print("Player 2: ");
+        System.out.println(player2.getScore().getScore());
+        
+    }
+
+    @Override
+    public void startGame() {
+    }
     
 }

@@ -62,20 +62,27 @@ public class Grid {
                 int b = B + moves[j];
                 if(validSquare(a, b) && !visited[a][b] && this.grid[a][b].getMine() == Mine.EMPTY){
                     this.visited[a][b] = true;
+                    try{
                     this.grid[a][b].setSquareState(new PlayerMove(MoveType.OPEN, null));
+                    }catch(IllegalMoveException e){}
                     if(this.grid[a][b].getSurroundingMines() == 0)
                         floodFill(a, b);
                 }
             }
         }
     }
-    
-    public boolean setSquareStatus(int i, int j, PlayerMove playerMove){
-        boolean done = this.grid[i][j].setSquareState(playerMove);
-        if(playerMove.getMoveType() == MoveType.OPEN && done){
+    public boolean stopGame(){
+        for(int i = 0; i < this.length; i++)
+            for(int j = 0; j < this.width; j++)
+                if(this.grid[i][j].getSquareStatus() == SquareStatus.CLOSED)
+                    return false;
+        return true;
+    }
+    public void setSquareStatus(int i, int j, PlayerMove playerMove) throws IllegalMoveException{
+        this.grid[i][j].setSquareState(playerMove);
+        if(playerMove.getMoveType() == MoveType.OPEN && this.getSquare(i, j).getMine() == Mine.EMPTY && this.getSquare(i, j).getSurroundingMines() == 0){
             this.visited = new boolean[this.length][this.width];
             this.floodFill(i, j);
         }
-        return done;
     }
 }

@@ -13,7 +13,7 @@ public class AIPlayer extends ComputerPlayer {
     }
 
     @Override
-    public SquarePlace pickSquare() {
+    public PlayerMove pickSquare() throws IllegalSquareName{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

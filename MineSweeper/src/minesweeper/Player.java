@@ -26,5 +26,5 @@ public abstract class Player {
     public void setStatus(PlayerStatus playerStatus){
         this.status = playerStatus;
     }
-    public abstract PlayerMove pickSquare();
+    public abstract PlayerMove pickSquare(int length, int width) throws IllegalSquareName;
 }

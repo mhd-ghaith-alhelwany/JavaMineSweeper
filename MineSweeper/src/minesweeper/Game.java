@@ -14,40 +14,59 @@ public abstract class Game {
     protected Player player1, player2;
     protected Grid grid;
     
+    public abstract void finishGame();
+    public abstract void updateGame();
+    public abstract void startGame();
+    
     public Game(int length, int width, int mines, GameType gametype){
         this.grid = new Grid(length, width, mines);
-        this.player1 = new ConsolePlayer(Color.BLUE, new Score(0), PlayerStatus.WAITING);
-        if(gametype == GameType.MULTI_PLAYER) 
-            this.player2 = new ConsolePlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
+        if(this instanceof ConsoleGame){
+            this.player1 = new ConsolePlayer(Color.BLUE, new Score(0), PlayerStatus.WAITING);
+            if(gametype == GameType.MULTI_PLAYER) 
+                this.player2 = new ConsolePlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
+            else if(gametype == GameType.EASY)
+                this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
+        }else{
+            this.player1 = new GUIPlayer(Color.BLUE, new Score(0), PlayerStatus.WAITING);
+            if(gametype == GameType.MULTI_PLAYER) 
+                this.player2 = new GUIPlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
+            else if(gametype == GameType.EASY)
+                this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
+        }
         this.start();
     }
     
+    public void takeTurn(Player player){
+        this.updateGame();
+            try{
+                PlayerMove player1Move = player.pickSquare(this.grid.length, this.grid.width);
+                this.checkPlayerMove(player, player1Move);
+                grid.setSquareStatus(player1Move.getSquarePlace().i, player1Move.getSquarePlace().j , player1Move);
+                player.getScore().changeScore(GameRules.getScoreChange(player1Move));
+            }catch(IllegalSquareName|IllegalMoveException e){
+                player.getScore().changeScore(GameRules.getWrongMoveScoreChange());
+            }
+    }
     public void start(){
+        this.startGame();
         while(true){
+            this.takeTurn(player1);
+            if(this.grid.stopGame()){
+                this.finishGame();
+                break;
+            }
             this.updateGame();
-            PlayerMove player1Move = player1.pickSquare();
-            this.checkPlayerMove(player1, player1Move);
-            if(player1Move.getMoveResult() != null && grid.setSquareStatus(player1Move.getSquarePlace().i, player1Move.getSquarePlace().j , player1Move))
-                player1.getScore().changeScore(GameRules.getScoreChange(player1Move));
-            else
-                player1.getScore().changeScore(GameRules.getWrongMoveScoreChange());
             
+            this.takeTurn(player2);
+            if(this.grid.stopGame()){
+                this.finishGame();
+                break;
+            }
             this.updateGame();
-            PlayerMove player2Move = player2.pickSquare();
-            this.checkPlayerMove(player2, player2Move);
-            if(player2Move.getMoveResult() != null && grid.setSquareStatus(player2Move.getSquarePlace().i, player2Move.getSquarePlace().j , player2Move))
-                player2.getScore().changeScore(GameRules.getScoreChange(player2Move));
-            else
-                player2.getScore().changeScore(GameRules.getWrongMoveScoreChange());
-            
         }
     }
     
     public void checkPlayerMove(Player player, PlayerMove playerMove){
-        if(!grid.validSquare(playerMove.getSquarePlace().i, playerMove.getSquarePlace().j)){
-            playerMove.setResult(null);
-            return;
-        }
         playerMove.setPlayer(player);
         if(playerMove.getMoveType() == MoveType.FLAG)
             if(grid.getSquare(playerMove.getSquarePlace().i,playerMove.getSquarePlace().j).getMine() == Mine.MINE) 
@@ -65,7 +84,4 @@ public abstract class Game {
             else
                 playerMove.setResult(MoveResult.RIGHT);
     }
-    
-    
-    public abstract void updateGame();
 }

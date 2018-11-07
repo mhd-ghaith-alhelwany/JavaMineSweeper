@@ -5,6 +5,8 @@
  */
 package minesweeper;
 
+import GUI.Frame;
+
 /**
  *
  * @author Ghaith
@@ -18,6 +20,17 @@ public class GUIGame extends Game {
     @Override
     public void updateGame() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void finishGame() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void startGame() {
+        Frame f = new Frame(this.grid.length, this.grid.width);
+        f.drawGrid(grid);
     }
     
 }

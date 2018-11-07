@@ -13,8 +13,10 @@ public class RandomPlayer extends ComputerPlayer {
     }
 
     @Override
-    public SquarePlace pickSquare() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public PlayerMove pickSquare(int length, int width) throws IllegalSquareName{
+        int i = (int)(Math.random() * (length));
+        int j = (int)(Math.random() * (width));
+        return new PlayerMove(MoveType.OPEN, new SquarePlace(i, j));
     }
     
 }
