@@ -15,16 +15,15 @@ public class ConsolePlayer extends Player{
     }
 
     @Override
-    public PlayerMove pickSquare(int length, int width) throws IllegalSquareName{
+    public PlayerMove pickSquare(int length, int width){
         Scanner scn = new Scanner(System.in);
         int i = 0, j = 0, k = 0;
         try{
             i = scn.nextInt();
             j = scn.next().charAt(0) - 'a';
             k = scn.next().charAt(0);
-            if(i < 0 || i >= length || j < 0 || j >= width) throw new IllegalSquareName();
-        }catch(InputMismatchException | IllegalSquareName e){
-            throw new IllegalSquareName();
+        }catch(InputMismatchException e){
+            
         }
         
         MoveType type = GameRules.getMoveType((char)k);

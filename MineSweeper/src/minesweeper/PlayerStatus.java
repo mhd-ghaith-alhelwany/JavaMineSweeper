@@ -6,4 +6,5 @@ package minesweeper;
  */
 public enum PlayerStatus {
     WAITING,
+    PLAYING
 }

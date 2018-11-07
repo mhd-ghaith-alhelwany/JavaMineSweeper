@@ -3,12 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Ghaith/Desktop/MineSweeper/src/minesweeper/Game.java</file>
-            <file>file:/C:/Users/Ghaith/Desktop/MineSweeper/src/minesweeper/Grid.java</file>
-            <file>file:/C:/Users/Ghaith/Desktop/MineSweeper/src/minesweeper/PlayerMove.java</file>
-            <file>file:/C:/Users/Ghaith/Desktop/MineSweeper/src/minesweeper/SquarePlace.java</file>
-            <file>file:/C:/Users/Ghaith/Desktop/MineSweeper/src/minesweeper/Mine.java</file>
-            <file>file:/C:/Users/Ghaith/Desktop/MineSweeper/src/minesweeper/Player.java</file>
+            <file>file:/C:/Users/Ghaith/Desktop/JavaMineSweeper/MineSweeper/src/minesweeper/GUIGame.java</file>
+            <file>file:/C:/Users/Ghaith/Desktop/JavaMineSweeper/MineSweeper/src/GUI/Grid.java</file>
+            <file>file:/C:/Users/Ghaith/Desktop/JavaMineSweeper/MineSweeper/src/GUI/Square.java</file>
+            <file>file:/C:/Users/Ghaith/Desktop/JavaMineSweeper/MineSweeper/src/GUI/Frame.java</file>
+            <file>file:/C:/Users/Ghaith/Desktop/JavaMineSweeper/MineSweeper/src/minesweeper/GUIPlayer.java</file>
+            <file>file:/C:/Users/Ghaith/Desktop/JavaMineSweeper/MineSweeper/src/minesweeper/MineSweeper.java</file>
         </group>
     </open-files>
 </project-private>

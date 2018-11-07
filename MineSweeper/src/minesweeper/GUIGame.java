@@ -28,9 +28,8 @@ public class GUIGame extends Game {
     }
 
     @Override
-    public void startGame() {
-        Frame f = new Frame(this.grid.length, this.grid.width);
-        f.drawGrid(grid);
+    public void start() {
+        Frame f = new Frame(this);
     }
     
 }

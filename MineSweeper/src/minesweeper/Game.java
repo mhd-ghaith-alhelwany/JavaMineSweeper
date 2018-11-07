@@ -5,6 +5,9 @@
  */
 package minesweeper;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Ghaith
@@ -14,9 +17,12 @@ public abstract class Game {
     protected Player player1, player2;
     protected Grid grid;
     
+    public Grid getGrid(){
+        return this.grid;
+    }
+    
     public abstract void finishGame();
     public abstract void updateGame();
-    public abstract void startGame();
     
     public Game(int length, int width, int mines, GameType gametype){
         this.grid = new Grid(length, width, mines);
@@ -27,44 +33,55 @@ public abstract class Game {
             else if(gametype == GameType.EASY)
                 this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
         }else{
-            this.player1 = new GUIPlayer(Color.BLUE, new Score(0), PlayerStatus.WAITING);
+            this.player1 = new ConsolePlayer(Color.BLUE, new Score(0), PlayerStatus.WAITING);
             if(gametype == GameType.MULTI_PLAYER) 
-                this.player2 = new GUIPlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
+                this.player2 = new ConsolePlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
             else if(gametype == GameType.EASY)
                 this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
         }
         this.start();
     }
-    
-    public void takeTurn(Player player){
-        this.updateGame();
-            try{
-                PlayerMove player1Move = player.pickSquare(this.grid.length, this.grid.width);
-                this.checkPlayerMove(player, player1Move);
-                grid.setSquareStatus(player1Move.getSquarePlace().i, player1Move.getSquarePlace().j , player1Move);
-                player.getScore().changeScore(GameRules.getScoreChange(player1Move));
-            }catch(IllegalSquareName|IllegalMoveException e){
-                player.getScore().changeScore(GameRules.getWrongMoveScoreChange());
-            }
+    public Player getPlayingPlayer(){
+        if(this.player1.getStatus() == PlayerStatus.PLAYING)
+            return player1;
+        else 
+            return player2;
     }
-    public void start(){
-        this.startGame();
-        while(true){
-            this.takeTurn(player1);
-            if(this.grid.stopGame()){
-                this.finishGame();
-                break;
-            }
-            this.updateGame();
-            
-            this.takeTurn(player2);
-            if(this.grid.stopGame()){
-                this.finishGame();
-                break;
-            }
-            this.updateGame();
+    public Player getWaitingPlayer(){
+        if(this.player1.getStatus() == PlayerStatus.WAITING)
+            return player1;
+        else 
+            return player2;
+    }
+    public void switchPlayers(){
+        if(this.player1.getStatus() == PlayerStatus.WAITING){
+            this.player1.setStatus(PlayerStatus.PLAYING);
+            this.player2.setStatus(PlayerStatus.WAITING);
+        }else{
+            this.player1.setStatus(PlayerStatus.WAITING);
+            this.player2.setStatus(PlayerStatus.PLAYING);
         }
     }
+    public void takeTurn(PlayerMove playerMove){
+        this.updateGame();
+        Player playingPlayer = this.getPlayingPlayer();
+        try{
+            if(
+                playerMove.getSquarePlace().i < 0 ||
+                playerMove.getSquarePlace().i >= this.grid.length ||
+                playerMove.getSquarePlace().j < 0 ||
+                playerMove.getSquarePlace().j >= this.grid.width
+               ) throw new IllegalSquareName();
+            this.checkPlayerMove(playingPlayer, playerMove);
+            grid.setSquareStatus(playerMove.getSquarePlace().i, playerMove.getSquarePlace().j , playerMove);
+            playingPlayer.getScore().changeScore(GameRules.getScoreChange(playerMove));
+            this.switchPlayers();
+        }catch(IllegalMoveException | IllegalSquareName e){
+            playingPlayer.getScore().changeScore(GameRules.getWrongMoveScoreChange());
+        }
+    }
+    
+    public abstract void start();
     
     public void checkPlayerMove(Player player, PlayerMove playerMove){
         playerMove.setPlayer(player);

@@ -1,19 +1,17 @@
 package GUI;
 
-import java.awt.GridLayout;
+import java.awt.BorderLayout;
 import javax.swing.JFrame;
-import minesweeper.Grid;
+import javax.swing.JLabel;
+import minesweeper.Game;
 
 public class Frame extends JFrame{
-    public Frame (int length, int width){
+    public Frame (Game g){
         this.setDefaultCloseOperation(Frame.EXIT_ON_CLOSE);
-        this.setExtendedState(Frame.MAXIMIZED_BOTH);
-        this.setLayout(new GridLayout(length, width));
-
+        this.setSize(g.getGrid().width * 60, g.getGrid().length * 60);
+        this.setLayout(new BorderLayout());
+        this.add(new Grid(g), BorderLayout.CENTER);
+        this.add(new JLabel("FUCK YOU SHARIF"), BorderLayout.SOUTH);
         this.setVisible(true);
-    }
-    
-    public void drawGrid(Grid g){
-        this.add(new Square());
     }
 }

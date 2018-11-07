@@ -33,9 +33,14 @@ public class GameRules {
         return (char)c;
     }
     public static MoveType getMoveType(char c){
-        if(c == 'f') return MoveType.FLAG;
-        else if(c == 'u') return MoveType.UNFLAG;
-        else return MoveType.OPEN;
+        switch (c) {
+            case 'f':
+                return MoveType.FLAG;
+            case 'u':
+                return MoveType.UNFLAG;
+            default:
+                return MoveType.OPEN;
+        }
     }
     public static int getWrongMoveScoreChange(){
         return -50;

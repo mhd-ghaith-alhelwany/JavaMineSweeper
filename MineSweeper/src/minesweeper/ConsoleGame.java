@@ -42,9 +42,18 @@ public class ConsoleGame extends Game{
         System.out.println(player2.getScore().getScore());
         
     }
-
+    
     @Override
-    public void startGame() {
+    public void start() {
+        while(true){
+            this.updateGame();
+            PlayerMove playerMove = this.getPlayingPlayer().pickSquare(this.grid.length, this.grid.width);
+            this.takeTurn(playerMove);
+            if(this.grid.stopGame()){
+                this.finishGame();
+                break;
+            }
+        }
     }
     
 }

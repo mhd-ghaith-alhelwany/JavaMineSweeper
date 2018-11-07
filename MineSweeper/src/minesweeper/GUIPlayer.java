@@ -16,8 +16,8 @@ public class GUIPlayer extends Player{
     }
 
     @Override
-    public SquarePlace pickSquare() {
-        return null;
+    public PlayerMove pickSquare(int length, int width) throws IllegalSquareName {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

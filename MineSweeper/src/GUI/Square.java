@@ -6,7 +6,6 @@
 package GUI;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
@@ -17,36 +16,40 @@ import javax.swing.border.LineBorder;
  * @author Ghaith
  */
 public class Square extends JPanel implements MouseListener{
-
-    public Square(){
-        this.addMouseListener(this);
+    minesweeper.SquarePlace place;
+    minesweeper.Game g;
+    public Square(minesweeper.Game g, int i, int j){
+        this.g = g;
+        this.place = new minesweeper.SquarePlace(i, j);
         this.setBorder(new LineBorder(Color.BLACK));
-        this.setPreferredSize(new Dimension(20, 20));
+        this.setBackground(Color.BLUE);
+        this.addMouseListener(this);
     }
     
+    public void changeColor(){
+        this.setBackground(Color.RED);
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        g.takeTurn();
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
