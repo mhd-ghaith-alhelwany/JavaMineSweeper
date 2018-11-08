@@ -13,7 +13,7 @@ public class RandomPlayer extends ComputerPlayer {
     }
 
     @Override
-    public PlayerMove pickSquare(int length, int width) throws IllegalSquareName{
+    public PlayerMove pickSquare(int length, int width){
         int i = (int)(Math.random() * (length));
         int j = (int)(Math.random() * (width));
         return new PlayerMove(MoveType.OPEN, new SquarePlace(i, j));

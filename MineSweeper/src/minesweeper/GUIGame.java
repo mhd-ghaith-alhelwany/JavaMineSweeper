@@ -12,24 +12,25 @@ import GUI.Frame;
  * @author Ghaith
  */
 public class GUIGame extends Game {
-
+    Frame f;
     public GUIGame(int length, int width, int mines, GameType gametype) {
         super(length, width, mines, gametype);
     }
 
     @Override
     public void updateGame() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        f.updateGame();
+        if(this.grid.stopGame()) f.finishGame();
     }
 
     @Override
     public void finishGame() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void start() {
-        Frame f = new Frame(this);
+        this.f = new Frame(this);
     }
     
 }

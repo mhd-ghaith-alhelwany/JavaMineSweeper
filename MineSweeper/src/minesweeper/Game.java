@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  * @author Ghaith
  */
 public abstract class Game {
-    protected GameType gameType;
+    public GameType gameType;
     protected Player player1, player2;
     protected Grid grid;
     
@@ -25,6 +25,7 @@ public abstract class Game {
     public abstract void updateGame();
     
     public Game(int length, int width, int mines, GameType gametype){
+        this.gameType = gametype;
         this.grid = new Grid(length, width, mines);
         if(this instanceof ConsoleGame){
             this.player1 = new ConsolePlayer(Color.BLUE, new Score(0), PlayerStatus.WAITING);
@@ -32,12 +33,16 @@ public abstract class Game {
                 this.player2 = new ConsolePlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
             else if(gametype == GameType.EASY)
                 this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
+            else
+                this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
         }else{
-            this.player1 = new ConsolePlayer(Color.BLUE, new Score(0), PlayerStatus.WAITING);
+            this.player1 = new GUIPlayer(Color.BLUE, new Score(0), PlayerStatus.WAITING);
             if(gametype == GameType.MULTI_PLAYER) 
                 this.player2 = new ConsolePlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
             else if(gametype == GameType.EASY)
                 this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
+            else
+                this.player2 = new AIPlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
         }
         this.start();
     }
@@ -66,6 +71,7 @@ public abstract class Game {
         this.updateGame();
         Player playingPlayer = this.getPlayingPlayer();
         try{
+            this.switchPlayers();
             if(
                 playerMove.getSquarePlace().i < 0 ||
                 playerMove.getSquarePlace().i >= this.grid.length ||
@@ -75,7 +81,6 @@ public abstract class Game {
             this.checkPlayerMove(playingPlayer, playerMove);
             grid.setSquareStatus(playerMove.getSquarePlace().i, playerMove.getSquarePlace().j , playerMove);
             playingPlayer.getScore().changeScore(GameRules.getScoreChange(playerMove));
-            this.switchPlayers();
         }catch(IllegalMoveException | IllegalSquareName e){
             playingPlayer.getScore().changeScore(GameRules.getWrongMoveScoreChange());
         }
