@@ -8,11 +8,12 @@ public abstract class Player {
     private Color color;
     private PlayerStatus status;
     private Score score;
-    
-    public Player(Color color, Score score, PlayerStatus playerStatus){
+    private int sheild;
+    public Player(Color color, Score score, PlayerStatus playerStatus, int sheild){
         this.color = color;
         this.score = score;
         this.status = playerStatus;
+        this.sheild = sheild;
     }
     public Color getColor(){
         return this.color;
@@ -26,5 +27,20 @@ public abstract class Player {
     public void setStatus(PlayerStatus playerStatus){
         this.status = playerStatus;
     }
+    public int getShelid(){
+        return this.sheild;
+    }
+    public void useSheild(){
+        this.sheild--;
+    }
+    public void addSheild(){
+        this.sheild++;
+    }
     public abstract PlayerMove pickSquare(int length, int width);
+    public class TimerThread extends Thread{
+        public TimerThread(){
+            this.start();
+            
+        }
+    }
 }

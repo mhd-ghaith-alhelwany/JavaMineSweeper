@@ -5,6 +5,7 @@ package minesweeper;
  * @author Ghaith
  */
 public enum Mine {
-    MINE, 
+    MINE,
+    SHEILD,
     EMPTY
 }

@@ -6,5 +6,6 @@ package minesweeper;
  */
 public enum MoveResult {
     WRONG,
-    RIGHT
+    RIGHT,
+    SHEILDED
 }

@@ -15,10 +15,15 @@ public class GameRules {
     static{
         scoreRules.put(new Pair<>(MoveType.FLAG, MoveResult.RIGHT), +10);
         scoreRules.put(new Pair<>(MoveType.FLAG, MoveResult.WRONG), -20);
+        scoreRules.put(new Pair<>(MoveType.FLAG, MoveResult.SHEILDED), 0);
+        
         scoreRules.put(new Pair<>(MoveType.OPEN, MoveResult.RIGHT), +20);
         scoreRules.put(new Pair<>(MoveType.OPEN, MoveResult.WRONG), -100);
+        scoreRules.put(new Pair<>(MoveType.OPEN, MoveResult.SHEILDED), -20);
+        
         scoreRules.put(new Pair<>(MoveType.UNFLAG, MoveResult.WRONG), -20);
         scoreRules.put(new Pair<>(MoveType.UNFLAG, MoveResult.RIGHT), +30);
+        scoreRules.put(new Pair<>(MoveType.UNFLAG, MoveResult.SHEILDED), 0);
         
         printChars.put(new Pair<>(SquareStatus.CLOSED, Mine.MINE), (int)'-');
         printChars.put(new Pair<>(SquareStatus.CLOSED, Mine.EMPTY), (int)'-');

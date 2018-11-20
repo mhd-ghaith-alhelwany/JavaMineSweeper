@@ -44,4 +44,7 @@ public class PlayerMove {
     public SquarePlace getSquarePlace(){
         return this.squarePlace;
     }
+    public Player getPlayer(){
+        return this.player;
+    }
 }

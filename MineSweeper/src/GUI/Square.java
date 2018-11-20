@@ -37,7 +37,7 @@ public class Square extends JPanel implements MouseListener{
     public void changeBackground(){
         switch (g.getGrid().getSquare(place.i, place.j).getSquareStatus()){
             case OPEN:
-                if(this.g.getGrid().getSquare(place.i, place.j).getMine() == Mine.EMPTY){
+                if(this.g.getGrid().getSquare(place.i, place.j).getMine() != Mine.MINE){
                     this.setBackground(Color.GREEN);
                     label.setText(g.getGrid().getSquare(place.i, place.j).getSurroundingMines() +"");
                 }

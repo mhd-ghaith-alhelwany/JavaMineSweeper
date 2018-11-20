@@ -24,25 +24,25 @@ public abstract class Game {
     public abstract void finishGame();
     public abstract void updateGame();
     
-    public Game(int length, int width, int mines, GameType gametype){
+    public Game(int length, int width, int mines, int sheilds, int sheildsForPlayer, GameType gametype){
         this.gameType = gametype;
-        this.grid = new Grid(length, width, mines);
+        this.grid = new Grid(length, width, mines, sheilds);
         if(this instanceof ConsoleGame){
-            this.player1 = new ConsolePlayer(Color.BLUE, new Score(0), PlayerStatus.WAITING);
+            this.player1 = new ConsolePlayer(Color.BLUE, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
             if(gametype == GameType.MULTI_PLAYER) 
-                this.player2 = new ConsolePlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
+                this.player2 = new ConsolePlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
             else if(gametype == GameType.EASY)
-                this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
+                this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
             else
-                this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
+                this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
         }else{
-            this.player1 = new GUIPlayer(Color.BLUE, new Score(0), PlayerStatus.WAITING);
+            this.player1 = new GUIPlayer(Color.BLUE, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
             if(gametype == GameType.MULTI_PLAYER) 
-                this.player2 = new ConsolePlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
+                this.player2 = new ConsolePlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
             else if(gametype == GameType.EASY)
-                this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
+                this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
             else
-                this.player2 = new AIPlayer(Color.RED, new Score(0), PlayerStatus.WAITING);
+                this.player2 = new AIPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
         }
         this.start();
     }
@@ -70,6 +70,7 @@ public abstract class Game {
     public void takeTurn(PlayerMove playerMove){
         this.updateGame();
         Player playingPlayer = this.getPlayingPlayer();
+        playerMove.setPlayer(playingPlayer);
         try{
             this.switchPlayers();
             if(
@@ -93,16 +94,35 @@ public abstract class Game {
         if(playerMove.getMoveType() == MoveType.FLAG)
             if(grid.getSquare(playerMove.getSquarePlace().i,playerMove.getSquarePlace().j).getMine() == Mine.MINE) 
                 playerMove.setResult(MoveResult.RIGHT);
-            else
-                playerMove.setResult(MoveResult.WRONG);
+            else{
+                if(player.getShelid() > 0){
+                    playerMove.setResult(MoveResult.SHEILDED);
+                    player.useSheild();
+                }else{
+                    playerMove.setResult(MoveResult.WRONG);
+                }
+                
+            }
         else if(playerMove.getMoveType() == MoveType.UNFLAG)
-            if(grid.getSquare(playerMove.getSquarePlace().i,playerMove.getSquarePlace().j).getMine() == Mine.MINE) 
-                playerMove.setResult(MoveResult.WRONG);
+            if(grid.getSquare(playerMove.getSquarePlace().i,playerMove.getSquarePlace().j).getMine() == Mine.MINE) {
+                if(player.getShelid() > 0){
+                    playerMove.setResult(MoveResult.SHEILDED);
+                    player.useSheild();
+                }else{
+                    playerMove.setResult(MoveResult.WRONG);
+                }
+            }
             else
                 playerMove.setResult(MoveResult.RIGHT);
         else
-            if(grid.getSquare(playerMove.getSquarePlace().i,playerMove.getSquarePlace().j).getMine() == Mine.MINE) 
-                playerMove.setResult(MoveResult.WRONG);
+            if(grid.getSquare(playerMove.getSquarePlace().i,playerMove.getSquarePlace().j).getMine() == Mine.MINE) {
+                if(player.getShelid() > 0){
+                    playerMove.setResult(MoveResult.SHEILDED);
+                    player.useSheild();
+                }else{
+                    playerMove.setResult(MoveResult.WRONG);
+                }
+            }
             else
                 playerMove.setResult(MoveResult.RIGHT);
     }

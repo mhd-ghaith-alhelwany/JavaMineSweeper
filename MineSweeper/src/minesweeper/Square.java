@@ -28,9 +28,19 @@ public class Square {
         return this.surroundingMines;
     }
     
+    public void setEmpty(){
+        this.mine = Mine.EMPTY;
+    }
+    
     public boolean setMine(){
         if(this.mine == Mine.MINE) return false;
         else this.mine = Mine.MINE;
+        return true;
+    }
+    
+    public boolean setSheild(){
+        if(this.mine == Mine.MINE || this.mine == Mine.SHEILD) return false;
+        else this.mine = Mine.SHEILD;
         return true;
     }
     

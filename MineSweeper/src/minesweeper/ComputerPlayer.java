@@ -11,8 +11,8 @@ package minesweeper;
  */
 public abstract class ComputerPlayer extends Player{
     
-    public ComputerPlayer(Color color, Score score, PlayerStatus playerStatus) {
-        super(color, score, playerStatus);
+    public ComputerPlayer(Color color, Score score, PlayerStatus playerStatus, int sheild) {
+        super(color, score, playerStatus, sheild);
     }
     
 }

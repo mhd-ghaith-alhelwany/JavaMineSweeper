@@ -13,8 +13,8 @@ import GUI.Frame;
  */
 public class GUIGame extends Game {
     Frame f;
-    public GUIGame(int length, int width, int mines, GameType gametype) {
-        super(length, width, mines, gametype);
+    public GUIGame(int length, int width, int mines, int sheilds, int sheildsForPlayer, GameType gametype) {
+        super(length, width, mines, sheilds, sheildsForPlayer, gametype);
     }
 
     @Override

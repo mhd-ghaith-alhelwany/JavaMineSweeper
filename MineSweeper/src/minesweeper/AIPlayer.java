@@ -8,8 +8,8 @@ package minesweeper;
 
 public class AIPlayer extends ComputerPlayer {
 
-    public AIPlayer(Color color, Score score, PlayerStatus playerStatus) {
-        super(color, score, playerStatus);
+    public AIPlayer(Color color, Score score, PlayerStatus playerStatus, int sheilds) {
+        super(color, score, playerStatus, sheilds);
     }
 
     @Override

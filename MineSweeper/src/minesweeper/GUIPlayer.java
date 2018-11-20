@@ -11,8 +11,8 @@ package minesweeper;
  */
 public class GUIPlayer extends Player{
 
-    public GUIPlayer(Color color, Score score, PlayerStatus playerStatus) {
-        super(color, score, playerStatus);
+    public GUIPlayer(Color color, Score score, PlayerStatus playerStatus, int sheild) {
+        super(color, score, playerStatus, sheild);
     }
 
     @Override

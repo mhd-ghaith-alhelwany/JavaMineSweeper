@@ -16,7 +16,7 @@ public class Frame extends JFrame{
         this.setLayout(new BorderLayout());
         this.grid = new Grid(g);
         this.add(grid, BorderLayout.CENTER);
-        label = new JLabel("Current: 0| Waiting: 0");
+        label = new JLabel("Game started");
         this.add(label, BorderLayout.SOUTH);
         this.setVisible(true);
     } 
@@ -26,7 +26,7 @@ public class Frame extends JFrame{
     }
     public void updateGame(){
         grid.updateGrid();
-        label.setText("Current: " + game.getPlayingPlayer().getScore().getScore() + "| Waiting: " + game.getWaitingPlayer().getScore().getScore());
+        label.setText("Sheilds: Current: " + game.getPlayingPlayer().getShelid() + "| Waiting: " + game.getWaitingPlayer().getShelid());
         this.revalidate();
     }
 }

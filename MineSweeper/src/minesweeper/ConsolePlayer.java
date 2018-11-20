@@ -9,9 +9,8 @@ import java.util.Scanner;
  */
 public class ConsolePlayer extends Player{
     
-    
-    public ConsolePlayer(Color color, Score score, PlayerStatus playerStatus) {
-        super(color, score, playerStatus);
+    public ConsolePlayer(Color color, Score score, PlayerStatus playerStatus, int sheild) {
+        super(color, score, playerStatus, sheild);
     }
 
     @Override
@@ -23,7 +22,6 @@ public class ConsolePlayer extends Player{
             j = scn.next().charAt(0) - 'a';
             k = scn.next().charAt(0);
         }catch(InputMismatchException e){
-            
         }
         
         MoveType type = GameRules.getMoveType((char)k);

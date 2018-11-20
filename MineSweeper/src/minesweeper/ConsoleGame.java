@@ -11,8 +11,8 @@ package minesweeper;
  */
 public class ConsoleGame extends Game{
 
-    public ConsoleGame(int length, int width, int mines, GameType gametype) {
-        super(length, width, mines, gametype);
+    public ConsoleGame(int length, int width, int mines, int sheildsForPlayer, int sheilds, GameType gametype) {
+        super(length, width, mines, sheilds, sheildsForPlayer, gametype);
     }
 
     @Override

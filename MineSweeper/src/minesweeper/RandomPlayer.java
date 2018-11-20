@@ -8,8 +8,8 @@ package minesweeper;
 
 public class RandomPlayer extends ComputerPlayer {
 
-    public RandomPlayer(Color color, Score score, PlayerStatus playerStatus) {
-        super(color, score, playerStatus);
+    public RandomPlayer(Color color, Score score, PlayerStatus playerStatus, int sheild) {
+        super(color, score, playerStatus, sheild);
     }
 
     @Override
