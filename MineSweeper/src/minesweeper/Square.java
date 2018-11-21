@@ -33,7 +33,7 @@ public class Square {
     }
     
     public boolean setMine(){
-        if(this.mine == Mine.MINE) return false;
+        if(this.mine == Mine.MINE || this.mine == Mine.SHEILD) return false;
         else this.mine = Mine.MINE;
         return true;
     }

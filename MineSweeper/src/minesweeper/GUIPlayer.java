@@ -20,7 +20,7 @@ public class GUIPlayer extends Player{
     public PlayerMove pickSquare(int length, int width){
         System.out.println("while");
         try{
-            Thread.sleep(2000);
+            Thread.sleep(4000);
         }catch(Exception e){
             System.out.println("interrupted");
         }

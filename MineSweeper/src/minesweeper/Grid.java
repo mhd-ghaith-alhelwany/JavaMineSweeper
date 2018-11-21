@@ -42,7 +42,7 @@ public class Grid {
         while(sheilds != 0){
             int i = (int)(Math.random() * (this.length));
             int j = (int)(Math.random() * (this.width));
-            if(grid[i][j].setSheild()== true) sheilds--;
+            if(grid[i][j].setSheild() == true) sheilds--;
         }
         int moves[] = {0, 1, -1};
         for(int i = 0; i < this.length; i++)

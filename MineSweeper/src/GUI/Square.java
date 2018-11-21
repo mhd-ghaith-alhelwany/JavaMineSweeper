@@ -37,11 +37,11 @@ public class Square extends JPanel implements MouseListener{
     public void changeBackground(){
         switch (g.getGrid().getSquare(place.i, place.j).getSquareStatus()){
             case OPEN:
-                if(this.g.getGrid().getSquare(place.i, place.j).getMine() != Mine.MINE){
+                if(this.g.getGrid().getSquare(place.i, place.j).getMine() == Mine.EMPTY){
                     this.setBackground(Color.GREEN);
                     label.setText(g.getGrid().getSquare(place.i, place.j).getSurroundingMines() +"");
                 }
-                else if(this.g.getGrid().getSquare(place.i, place.j).getMine() != Mine.SHEILD){
+                else if(this.g.getGrid().getSquare(place.i, place.j).getMine() == Mine.SHEILD){
                     this.setBackground(Color.magenta);
                     label.setText(g.getGrid().getSquare(place.i, place.j).getSurroundingMines() +"");
                 }else
@@ -56,14 +56,14 @@ public class Square extends JPanel implements MouseListener{
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-        g.getPlayingPlayer().setPlayerMove(new PlayerMove(e.getButton() == 1? MoveType.OPEN: g.getGrid().getSquare(place.i, place.j).getSquareStatus() == SquareStatus.CLOSED? MoveType.FLAG : MoveType.UNFLAG, place));
-        g.MainThread.interrupt();
-        g.updateGame();
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        
+        System.out.println("fuck");
+        g.getPlayingPlayer().setPlayerMove(new PlayerMove(e.getButton() == 1? MoveType.OPEN: g.getGrid().getSquare(place.i, place.j).getSquareStatus() == SquareStatus.CLOSED? MoveType.FLAG : MoveType.UNFLAG, place));
+        g.MainThread.interrupt();
+        g.updateGame();
     }
 
     @Override

@@ -47,10 +47,4 @@ public abstract class Player {
     }
     
     public abstract PlayerMove pickSquare(int length, int width);
-    public class TimerThread extends Thread{
-        public TimerThread(){
-            this.start();
-            
-        }
-    }
 }

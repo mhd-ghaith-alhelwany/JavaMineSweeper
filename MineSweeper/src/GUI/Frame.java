@@ -26,7 +26,7 @@ public class Frame extends JFrame{
     }
     public void updateGame(){
         grid.updateGrid();
-        label.setText("Sheilds: Current: " + game.getPlayingPlayer().getShelid() + "| Waiting: " + game.getWaitingPlayer().getShelid());
+        label.setText(game.getPlayingPlayer().getColor() + " Player playing. Sheilds: " + game.getPlayingPlayer().getShelid());
         this.revalidate();
     }
 }

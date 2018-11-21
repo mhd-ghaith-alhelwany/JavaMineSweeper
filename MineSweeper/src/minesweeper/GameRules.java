@@ -27,9 +27,14 @@ public class GameRules {
         
         printChars.put(new Pair<>(SquareStatus.CLOSED, Mine.MINE), (int)'-');
         printChars.put(new Pair<>(SquareStatus.CLOSED, Mine.EMPTY), (int)'-');
+        printChars.put(new Pair<>(SquareStatus.CLOSED, Mine.SHEILD), (int)'-');
+        
         printChars.put(new Pair<>(SquareStatus.FLAGGED, Mine.EMPTY), (int)'!');
         printChars.put(new Pair<>(SquareStatus.FLAGGED, Mine.MINE), (int)'!');
+        printChars.put(new Pair<>(SquareStatus.FLAGGED, Mine.SHEILD), (int)'!');
+        
         printChars.put(new Pair<>(SquareStatus.OPEN, Mine.MINE), (int)'*');
+        printChars.put(new Pair<>(SquareStatus.OPEN, Mine.SHEILD), (int)'S');
         printChars.put(new Pair<>(SquareStatus.OPEN, Mine.EMPTY), 0);
     }
     
