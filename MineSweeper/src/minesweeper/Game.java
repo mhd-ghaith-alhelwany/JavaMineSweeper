@@ -5,9 +5,6 @@
  */
 package minesweeper;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Ghaith
@@ -28,7 +25,7 @@ public abstract class Game {
         this.gameType = gametype;
         this.grid = new Grid(length, width, mines, sheilds);
         if(this instanceof ConsoleGame){
-            this.player1 = new ConsolePlayer(Color.BLUE, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
+            this.player1 = new ConsolePlayer(Color.BLUE, new Score(0), PlayerStatus.PLAYING, sheildsForPlayer);
             if(gametype == GameType.MULTI_PLAYER) 
                 this.player2 = new ConsolePlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
             else if(gametype == GameType.EASY)
@@ -36,7 +33,7 @@ public abstract class Game {
             else
                 this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
         }else{
-            this.player1 = new GUIPlayer(Color.BLUE, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
+            this.player1 = new GUIPlayer(Color.BLUE, new Score(0), PlayerStatus.PLAYING, sheildsForPlayer);
             if(gametype == GameType.MULTI_PLAYER) 
                 this.player2 = new ConsolePlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
             else if(gametype == GameType.EASY)
@@ -44,7 +41,7 @@ public abstract class Game {
             else
                 this.player2 = new AIPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
         }
-        this.start();
+        this.play();
     }
     public Player getPlayingPlayer(){
         if(this.player1.getStatus() == PlayerStatus.PLAYING)
@@ -89,6 +86,13 @@ public abstract class Game {
     
     public abstract void start();
     
+    public void play(){
+        while(true){
+            this.start();
+            this.takeTurn(getPlayingPlayer().pickSquare(grid.length, grid.width));
+            
+        }
+    }
     public void checkPlayerMove(Player player, PlayerMove playerMove){
         playerMove.setPlayer(player);
         if(playerMove.getMoveType() == MoveType.FLAG)

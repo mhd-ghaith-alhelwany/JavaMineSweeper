@@ -63,7 +63,6 @@ public class Grid {
     
     private boolean visited[][];
     private void floodFill(int A, int B, Player p){
-        if(this.grid[A][B].getMine() == Mine.SHEILD) p.addSheild();
         this.grid[A][B].setEmpty();
         int moves[] = {0, 1, -1};
         for(int i = 0; i < 3; i++){

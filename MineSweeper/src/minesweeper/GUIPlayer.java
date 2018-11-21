@@ -10,14 +10,24 @@ package minesweeper;
  * @author Ghaith
  */
 public class GUIPlayer extends Player{
-
+    
     public GUIPlayer(Color color, Score score, PlayerStatus playerStatus, int sheild) {
         super(color, score, playerStatus, sheild);
     }
 
     @Override
     public PlayerMove pickSquare(int length, int width){
-        return null;
+        while(this.playerMove == null){
+            System.out.println("while");
+            try{
+                this.wait();
+            }catch(Exception e){
+                System.out.println("interrupted");
+            }
+        }
+        PlayerMove playerMove = this.playerMove;
+        this.playerMove = null;
+        return playerMove;
     }
     
 }

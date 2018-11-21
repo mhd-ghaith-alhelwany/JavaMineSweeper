@@ -45,15 +45,7 @@ public class ConsoleGame extends Game{
     
     @Override
     public void start() {
-        while(true){
-            this.updateGame();
-            PlayerMove playerMove = this.getPlayingPlayer().pickSquare(this.grid.length, this.grid.width);
-            this.takeTurn(playerMove);
-            if(this.grid.stopGame()){
-                this.finishGame();
-                break;
-            }
-        }
+        this.updateGame();
     }
     
 }

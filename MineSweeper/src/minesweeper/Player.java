@@ -9,11 +9,13 @@ public abstract class Player {
     private PlayerStatus status;
     private Score score;
     private int sheild;
+    protected PlayerMove playerMove;
     public Player(Color color, Score score, PlayerStatus playerStatus, int sheild){
         this.color = color;
         this.score = score;
         this.status = playerStatus;
         this.sheild = sheild;
+        this.playerMove = null;
     }
     public Color getColor(){
         return this.color;
@@ -36,6 +38,13 @@ public abstract class Player {
     public void addSheild(){
         this.sheild++;
     }
+    public void setPlayerMove(PlayerMove playerMove){
+        this.playerMove = playerMove;
+    }
+    public PlayerMove getPlayerMove(){
+        return this.playerMove;
+    }
+    
     public abstract PlayerMove pickSquare(int length, int width);
     public class TimerThread extends Thread{
         public TimerThread(){
