@@ -18,11 +18,11 @@ public class GUIPlayer extends Player{
 
     @Override
     public PlayerMove pickSquare(int length, int width){
-        System.out.println("while");
+        //System.out.println("while");
         try{
             Thread.sleep(4000);
         }catch(Exception e){
-            System.out.println("interrupted");
+            //System.out.println("interrupted");
         }
         PlayerMove playerMove = this.playerMove;
         this.playerMove = null;

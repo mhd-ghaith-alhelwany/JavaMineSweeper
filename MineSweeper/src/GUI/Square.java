@@ -60,7 +60,6 @@ public class Square extends JPanel implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("fuck");
         g.getPlayingPlayer().setPlayerMove(new PlayerMove(e.getButton() == 1? MoveType.OPEN: g.getGrid().getSquare(place.i, place.j).getSquareStatus() == SquareStatus.CLOSED? MoveType.FLAG : MoveType.UNFLAG, place));
         g.MainThread.interrupt();
         g.updateGame();
