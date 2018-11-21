@@ -13,7 +13,7 @@ public abstract class Game {
     public GameType gameType;
     protected Player player1, player2;
     protected Grid grid;
-    
+    public Thread MainThread;
     public Grid getGrid(){
         return this.grid;
     }
@@ -22,6 +22,7 @@ public abstract class Game {
     public abstract void updateGame();
     
     public Game(int length, int width, int mines, int sheilds, int sheildsForPlayer, GameType gametype){
+        this.MainThread = Thread.currentThread();
         this.gameType = gametype;
         this.grid = new Grid(length, width, mines, sheilds);
         if(this instanceof ConsoleGame){
@@ -65,11 +66,10 @@ public abstract class Game {
         }
     }
     public void takeTurn(PlayerMove playerMove){
-        this.updateGame();
+        if(playerMove == null) return;
         Player playingPlayer = this.getPlayingPlayer();
         playerMove.setPlayer(playingPlayer);
         try{
-            this.switchPlayers();
             if(
                 playerMove.getSquarePlace().i < 0 ||
                 playerMove.getSquarePlace().i >= this.grid.length ||
@@ -82,15 +82,16 @@ public abstract class Game {
         }catch(IllegalMoveException | IllegalSquareName e){
             playingPlayer.getScore().changeScore(GameRules.getWrongMoveScoreChange());
         }
+        this.updateGame();
     }
     
     public abstract void start();
     
     public void play(){
+        this.start();
         while(true){
-            this.start();
             this.takeTurn(getPlayingPlayer().pickSquare(grid.length, grid.width));
-            
+            this.switchPlayers();
         }
     }
     public void checkPlayerMove(Player player, PlayerMove playerMove){

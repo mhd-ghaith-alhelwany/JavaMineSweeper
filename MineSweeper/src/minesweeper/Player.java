@@ -10,6 +10,7 @@ public abstract class Player {
     private Score score;
     private int sheild;
     protected PlayerMove playerMove;
+    
     public Player(Color color, Score score, PlayerStatus playerStatus, int sheild){
         this.color = color;
         this.score = score;

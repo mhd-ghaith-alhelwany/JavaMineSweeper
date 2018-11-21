@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package minesweeper;
 
 /**
@@ -17,13 +18,11 @@ public class GUIPlayer extends Player{
 
     @Override
     public PlayerMove pickSquare(int length, int width){
-        while(this.playerMove == null){
-            System.out.println("while");
-            try{
-                this.wait();
-            }catch(Exception e){
-                System.out.println("interrupted");
-            }
+        System.out.println("while");
+        try{
+            Thread.sleep(2000);
+        }catch(Exception e){
+            System.out.println("interrupted");
         }
         PlayerMove playerMove = this.playerMove;
         this.playerMove = null;
