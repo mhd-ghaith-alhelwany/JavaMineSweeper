@@ -36,7 +36,7 @@ public abstract class Game {
         }else{
             this.player1 = new GUIPlayer(Color.BLUE, new Score(0), PlayerStatus.PLAYING, sheildsForPlayer);
             if(gametype == GameType.MULTI_PLAYER) 
-                this.player2 = new ConsolePlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
+                this.player2 = new GUIPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
             else if(gametype == GameType.EASY)
                 this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
             else
@@ -66,7 +66,10 @@ public abstract class Game {
         }
     }
     public void takeTurn(PlayerMove playerMove){
-        if(playerMove == null) return;
+        if(playerMove == null){
+            this.updateGame();
+            return;
+        }
         Player playingPlayer = this.getPlayingPlayer();
         playerMove.setPlayer(playingPlayer);
         try{

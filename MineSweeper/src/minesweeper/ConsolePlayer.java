@@ -22,13 +22,15 @@ public class ConsolePlayer extends Player{
         Thread t = new Thread(scn);
         t.start();
         try {
-            Thread.sleep(10000);
+            Thread.sleep(5000);
         } catch (InterruptedException ex) {
             if(scn.i == -1 || scn.j == -1 || scn.k == -1) return null;
             MoveType type = GameRules.getMoveType((char)scn.k);
             SquarePlace squarePlace = new SquarePlace(scn.i, scn.j);
+            t.stop();
             return new PlayerMove(type, squarePlace);
         }
+        t.stop();
         return null;
     }
     public class ScannerThread implements Runnable{

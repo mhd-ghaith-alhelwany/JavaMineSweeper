@@ -9,7 +9,7 @@ public abstract class Player {
     private PlayerStatus status;
     private Score score;
     private int sheild;
-    protected PlayerMove playerMove;
+    private PlayerMove playerMove;
     
     public Player(Color color, Score score, PlayerStatus playerStatus, int sheild){
         this.color = color;
