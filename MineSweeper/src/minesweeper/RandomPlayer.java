@@ -14,6 +14,9 @@ public class RandomPlayer extends ComputerPlayer {
 
     @Override
     public PlayerMove pickSquare(int length, int width){
+        try{
+            Thread.sleep(2000);
+        }catch(Exception e){}
         int i = (int)(Math.random() * (length));
         int j = (int)(Math.random() * (width));
         return new PlayerMove(MoveType.OPEN, new SquarePlace(i, j));

@@ -19,7 +19,7 @@ public class GUIPlayer extends Player{
     @Override
     public PlayerMove pickSquare(int length, int width){
         try{
-            Thread.sleep(4000);
+            Thread.sleep(5000);
         }catch(Exception e){
             return this.getPlayerMove();
         }
