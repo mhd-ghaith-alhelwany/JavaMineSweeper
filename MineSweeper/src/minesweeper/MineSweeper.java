@@ -5,6 +5,9 @@
  */
 package minesweeper;
 
+import logs.FileIO;
+import logs.SavedGame;
+
 /**
  *
  * @author Ghaith
@@ -15,7 +18,11 @@ public class MineSweeper {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new GUIGame(10, 10, 10, 10, 2,  GameType.EASY);
+        //new GUI.Settings();
+       // new GUIGame(10, 10, 10, 10, 2,  GameType.EASY);
+        SavedGame g = FileIO.read("D://savedGame.bin");
+        new GUIGame(g);
     }
     
 }
+    

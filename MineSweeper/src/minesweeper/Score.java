@@ -1,10 +1,12 @@
 package minesweeper;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ghaith
  */
-public class Score {
+public class Score implements Serializable{
     private int score;
     public Score(int score){
         this.score = score;

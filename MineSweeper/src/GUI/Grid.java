@@ -6,6 +6,7 @@
 package GUI;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.io.Serializable;
 import javax.swing.JPanel;
 import minesweeper.Game;
 
@@ -13,7 +14,7 @@ import minesweeper.Game;
  *
  * @author Ghaith
  */
-public class Grid extends JPanel{
+public class Grid extends JPanel implements Serializable{
     Square grid[][];
     Game g;
     public Grid(minesweeper.Game g){

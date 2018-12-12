@@ -1,15 +1,14 @@
+
 package minesweeper;
 
+import java.io.Serializable;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Ghaith
  */
-public class ConsolePlayer extends Player{
+public class ConsolePlayer extends Player implements Serializable{
     
     public ConsolePlayer(Color color, Score score, PlayerStatus playerStatus, int sheild) {
         super(color, score, playerStatus, sheild);

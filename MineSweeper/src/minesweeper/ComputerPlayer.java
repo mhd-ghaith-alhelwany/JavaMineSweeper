@@ -5,11 +5,13 @@
  */
 package minesweeper;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ghaith
  */
-public abstract class ComputerPlayer extends Player{
+public abstract class ComputerPlayer extends Player implements Serializable{
     
     public ComputerPlayer(Color color, Score score, PlayerStatus playerStatus, int sheild) {
         super(color, score, playerStatus, sheild);

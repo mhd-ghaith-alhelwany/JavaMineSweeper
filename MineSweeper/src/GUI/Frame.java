@@ -1,11 +1,16 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.Serializable;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import minesweeper.Game;
 
-public class Frame extends JFrame{
+public class Frame extends JFrame implements Serializable{
     Grid grid;
     JLabel label;
     Game game;
@@ -14,10 +19,27 @@ public class Frame extends JFrame{
         this.setDefaultCloseOperation(Frame.EXIT_ON_CLOSE);
         this.setSize(g.getGrid().width * 60, g.getGrid().length * 60);
         this.setLayout(new BorderLayout());
+        
         this.grid = new Grid(g);
         this.add(grid, BorderLayout.CENTER);
+        
         label = new JLabel("Game started");
         this.add(label, BorderLayout.SOUTH);
+        
+        JButton saveButton = new JButton("Save");
+        saveButton.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent e) {
+                g.save();
+            }
+            public void mousePressed(MouseEvent e){}
+            public void mouseReleased(MouseEvent e){}
+            public void mouseEntered(MouseEvent e){}
+            public void mouseExited(MouseEvent e){}
+        });
+        JPanel buttons = new JPanel();
+        buttons.add(saveButton);
+        this.add(buttons, BorderLayout.NORTH);
+        
         this.setVisible(true);
     } 
     public void finishGame(){

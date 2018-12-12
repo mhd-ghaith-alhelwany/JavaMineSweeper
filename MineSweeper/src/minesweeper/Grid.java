@@ -1,13 +1,15 @@
 package minesweeper;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ghaith
  */
-public class Grid {
-    public int length, width, mines;
+public class Grid  implements Serializable{
+    public int length, width, mines, sheilds;
     private Square grid[][];
-    private int sheilds;
+    
     public Grid(int length, int width, int mines, int sheilds){
         this.length = length;
         this.width = width;
@@ -15,6 +17,19 @@ public class Grid {
         this.sheilds = sheilds;
         this.grid = new Square[length][width];
         initializeGrid();
+    }
+    
+    public Grid(Grid g){
+        this.length = g.length;
+        this.width = g.width;
+        this.mines = g.mines;
+        this.sheilds = g.sheilds;
+        this.grid = g.grid;
+        for(int i = 0; i < g.length; i++){
+            for(int j = 0; j < g.width; j++){
+                g.getSquare(i, j).setClosed();
+            }
+        }
     }
     
     public boolean validSquare(int i, int j){

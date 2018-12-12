@@ -5,11 +5,13 @@
  */
 package minesweeper;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ghaith
  */
-public class ConsoleGame extends Game{
+public class ConsoleGame extends Game implements Serializable{
 
     public ConsoleGame(int length, int width, int mines, int sheildsForPlayer, int sheilds, GameType gametype) {
         super(length, width, mines, sheilds, sheildsForPlayer, gametype);

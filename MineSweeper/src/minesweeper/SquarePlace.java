@@ -5,11 +5,13 @@
  */
 package minesweeper;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ghaith
  */
-public class SquarePlace {
+public class SquarePlace implements Serializable{
     public int i, j;
 
     public SquarePlace(int i, int j) {

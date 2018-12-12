@@ -1,10 +1,12 @@
 package minesweeper;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ghaith
  */
-public class Square {
+public class Square implements Serializable{
     private SquarePlace squarePlace;
     private Mine mine;
     private SquareStatus squareStatus;
@@ -65,5 +67,7 @@ public class Square {
     public Mine getMine(){
         return this.mine;
     }
-    
+    public void setClosed(){
+        this.squareStatus = SquareStatus.CLOSED;
+    }
 }

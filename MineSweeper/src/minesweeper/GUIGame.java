@@ -6,15 +6,21 @@
 package minesweeper;
 
 import GUI.Frame;
+import GUI.Settings;
+import java.io.Serializable;
+import logs.SavedGame;
 
 /**
  *
  * @author Ghaith
  */
-public class GUIGame extends Game {
+public class GUIGame extends Game implements Serializable{
     Frame f;
     public GUIGame(int length, int width, int mines, int sheilds, int sheildsForPlayer, GameType gametype) {
         super(length, width, mines, sheilds, sheildsForPlayer, gametype);
+    }
+    public GUIGame(SavedGame s){
+        super(s);
     }
 
     @Override

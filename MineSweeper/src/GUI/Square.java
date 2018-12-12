@@ -8,6 +8,7 @@ package GUI;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.Serializable;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -21,7 +22,7 @@ import minesweeper.SquareStatus;
  *
  * @author Ghaith
  */
-public class Square extends JPanel implements MouseListener{
+public class Square extends JPanel implements MouseListener, Serializable{
     minesweeper.SquarePlace place;
     minesweeper.Game g;
     JLabel label = new JLabel("");

@@ -1,10 +1,12 @@
 package minesweeper;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ghaith
  */
-public abstract class Player {
+public abstract class Player  implements Serializable{
     private Color color;
     private PlayerStatus status;
     private Score score;

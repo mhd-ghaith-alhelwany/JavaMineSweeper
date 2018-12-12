@@ -5,14 +5,10 @@
  */
 package minesweeper;
 
-import java.io.Serializable;
-
 /**
  *
  * @author Ghaith
  */
-public enum GameType  implements Serializable{
-    EASY,
-    HARD,
-    MULTI_PLAYER
+public class CounterThread extends Thread{
+    
 }

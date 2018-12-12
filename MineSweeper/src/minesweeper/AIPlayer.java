@@ -5,8 +5,10 @@
  */
 package minesweeper;
 
+import java.io.Serializable;
 
-public class AIPlayer extends ComputerPlayer {
+
+public class AIPlayer extends ComputerPlayer implements Serializable{
 
     public AIPlayer(Color color, Score score, PlayerStatus playerStatus, int sheilds) {
         super(color, score, playerStatus, sheilds);

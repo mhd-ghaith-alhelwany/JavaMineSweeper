@@ -5,15 +5,25 @@
  */
 package minesweeper;
 
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import logs.FileIO;
+import logs.PlayerMoveLog;
+import logs.PlayerMoveLogVector;
+import logs.SavedGame;
+
 /**
  *
  * @author Ghaith
  */
-public abstract class Game {
+public abstract class Game  implements Serializable{
     public GameType gameType;
     protected Player player1, player2;
     protected Grid grid;
     public Thread MainThread;
+    public int defaultSheilds;
+    private PlayerMoveLogVector vector;
     public Grid getGrid(){
         return this.grid;
     }
@@ -22,6 +32,9 @@ public abstract class Game {
     public abstract void updateGame();
     
     public Game(int length, int width, int mines, int sheilds, int sheildsForPlayer, GameType gametype){
+        this.defaultSheilds = sheildsForPlayer;
+        this.vector = new PlayerMoveLogVector();
+        
         this.MainThread = Thread.currentThread();
         this.gameType = gametype;
         this.grid = new Grid(length, width, mines, sheilds);
@@ -40,10 +53,51 @@ public abstract class Game {
             else if(gametype == GameType.EASY)
                 this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
             else
-                this.player2 = new AIPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
+                this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, sheildsForPlayer);
+        }
+        this.start();
+        this.play();
+    }
+    
+    public Game(SavedGame s){
+        this.vector = new PlayerMoveLogVector();
+        this.defaultSheilds = s.defualtSheilds;
+        this.MainThread = Thread.currentThread();
+        this.gameType = s.gameType;
+        this.grid = new Grid(s.g);
+        
+        if(this instanceof ConsoleGame){
+            this.player1 = new ConsolePlayer(Color.BLUE, new Score(0), PlayerStatus.PLAYING, defaultSheilds);
+            if(gameType == GameType.MULTI_PLAYER) 
+                this.player2 = new ConsolePlayer(Color.RED, new Score(0), PlayerStatus.WAITING, defaultSheilds);
+            else if(gameType == GameType.EASY)
+                this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, defaultSheilds);
+            else
+                this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, defaultSheilds);
+        }else{
+            this.player1 = new GUIPlayer(Color.BLUE, new Score(0), PlayerStatus.PLAYING, defaultSheilds);
+            if(gameType == GameType.MULTI_PLAYER) 
+                this.player2 = new GUIPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, defaultSheilds);
+            else if(gameType == GameType.EASY)
+                this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, defaultSheilds);
+            else
+                this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, defaultSheilds);
+        }
+        this.start();
+        System.out.println(s.vector.getVector().size());
+        for (int i = 0; i < s.vector.getVector().size(); i++){
+            PlayerMoveLog playerMoveLog = s.vector.getVector().get(i);
+            try {
+                Thread.sleep(playerMoveLog.time);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.takeTurn(new PlayerMove(playerMoveLog.moveType, playerMoveLog.squarePlace));
+            this.switchPlayers();
         }
         this.play();
     }
+    
     public Player getPlayingPlayer(){
         if(this.player1.getStatus() == PlayerStatus.PLAYING)
             return player1;
@@ -68,8 +122,13 @@ public abstract class Game {
     public void takeTurn(PlayerMove playerMove){
         if(playerMove == null){
             this.updateGame();
+            vector.add(new PlayerMoveLog(null, null));
             return;
         }
+        
+        PlayerMoveLog log = new PlayerMoveLog(playerMove.getMoveType(), playerMove.getSquarePlace());
+        vector.add(log);
+        
         Player playingPlayer = this.getPlayingPlayer();
         playerMove.setPlayer(playingPlayer);
         try{
@@ -91,7 +150,6 @@ public abstract class Game {
     public abstract void start();
     
     public void play(){
-        this.start();
         while(true){
             this.takeTurn(getPlayingPlayer().pickSquare(grid.length, grid.width));
             this.switchPlayers();
@@ -133,5 +191,9 @@ public abstract class Game {
             }
             else
                 playerMove.setResult(MoveResult.RIGHT);
+    }
+    
+    public void save(){
+        FileIO.write("savedGame", new SavedGame(vector, this.defaultSheilds, this.grid, this.gameType));
     }
 }

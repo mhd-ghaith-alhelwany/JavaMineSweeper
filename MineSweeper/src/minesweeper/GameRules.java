@@ -1,5 +1,6 @@
 package minesweeper;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.util.Pair;
@@ -8,7 +9,7 @@ import javafx.util.Pair;
  *
  * @author Ghaith
  */
-public class GameRules {
+public class GameRules implements Serializable{
     private static final Map<Pair<MoveType, MoveResult>, Integer> scoreRules = new HashMap<Pair<MoveType, MoveResult>, Integer>();
     private static final Map<Pair<SquareStatus, Mine>, Integer> printChars = new HashMap<Pair<SquareStatus, Mine>, Integer>();
     

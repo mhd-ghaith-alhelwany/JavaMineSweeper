@@ -5,11 +5,14 @@
  */
 package minesweeper;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ghaith
  */
-public class PlayerMove {
+public class PlayerMove implements Serializable{
+    private int time;
     private MoveResult moveResult;
     private MoveType moveType;
     private SquarePlace squarePlace;
@@ -46,5 +49,11 @@ public class PlayerMove {
     }
     public Player getPlayer(){
         return this.player;
+    }
+    public void setTime(int time){
+        this.time = time;
+    }
+    public int getTime(){
+        return this.time;
     }
 }

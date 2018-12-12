@@ -6,11 +6,13 @@
 
 package minesweeper;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ghaith
  */
-public class GUIPlayer extends Player{
+public class GUIPlayer extends Player implements Serializable{
     
     public GUIPlayer(Color color, Score score, PlayerStatus playerStatus, int sheild) {
         super(color, score, playerStatus, sheild);

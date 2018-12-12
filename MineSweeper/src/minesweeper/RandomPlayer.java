@@ -5,8 +5,10 @@
  */
 package minesweeper;
 
+import java.io.Serializable;
 
-public class RandomPlayer extends ComputerPlayer {
+
+public class RandomPlayer extends ComputerPlayer implements Serializable{
 
     public RandomPlayer(Color color, Score score, PlayerStatus playerStatus, int sheild) {
         super(color, score, playerStatus, sheild);

@@ -5,10 +5,12 @@
  */
 package minesweeper;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ghaith
  */
-public class IllegalMoveException extends GameException{
+public class IllegalMoveException extends GameException implements Serializable{
     
 }
