@@ -18,6 +18,8 @@ import logs.SavedGame;
  * @author Ghaith
  */
 public abstract class Game  implements Serializable{
+    public boolean lock = false;
+    public String name;
     public GameType gameType;
     protected Player player1, player2;
     protected Grid grid;
@@ -31,13 +33,15 @@ public abstract class Game  implements Serializable{
     public abstract void finishGame();
     public abstract void updateGame();
     
-    public Game(int length, int width, int mines, int sheilds, int sheildsForPlayer, GameType gametype){
+    public Game(int length, int width, int mines, int sheilds, int sheildsForPlayer, GameType gametype, String name){
+        
         this.defaultSheilds = sheildsForPlayer;
         this.vector = new PlayerMoveLogVector();
         
         this.MainThread = Thread.currentThread();
         this.gameType = gametype;
         this.grid = new Grid(length, width, mines, sheilds);
+        this.name = name;
         if(this instanceof ConsoleGame){
             this.player1 = new ConsolePlayer(Color.BLUE, new Score(0), PlayerStatus.PLAYING, sheildsForPlayer);
             if(gametype == GameType.MULTI_PLAYER) 
@@ -84,17 +88,18 @@ public abstract class Game  implements Serializable{
                 this.player2 = new RandomPlayer(Color.RED, new Score(0), PlayerStatus.WAITING, defaultSheilds);
         }
         this.start();
-        System.out.println(s.vector.getVector().size());
+        this.lock = true;
         for (int i = 0; i < s.vector.getVector().size(); i++){
             PlayerMoveLog playerMoveLog = s.vector.getVector().get(i);
             try {
-                Thread.sleep(playerMoveLog.time);
+                Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
             }
             this.takeTurn(new PlayerMove(playerMoveLog.moveType, playerMoveLog.squarePlace));
             this.switchPlayers();
         }
+        this.lock = false;
         this.play();
     }
     
@@ -118,9 +123,12 @@ public abstract class Game  implements Serializable{
             this.player1.setStatus(PlayerStatus.WAITING);
             this.player2.setStatus(PlayerStatus.PLAYING);
         }
+        if(!(this.getPlayingPlayer() instanceof GUIPlayer))
+            this.lock = true;
+        else this.lock = false;
     }
     public void takeTurn(PlayerMove playerMove){
-        if(playerMove == null){
+        if(playerMove == null || playerMove.getMoveType() == null || playerMove.getSquarePlace() == null){
             this.updateGame();
             vector.add(new PlayerMoveLog(null, null));
             return;
@@ -153,6 +161,7 @@ public abstract class Game  implements Serializable{
         while(true){
             this.takeTurn(getPlayingPlayer().pickSquare(grid.length, grid.width));
             this.switchPlayers();
+            this.quickSave();
         }
     }
     public void checkPlayerMove(Player player, PlayerMove playerMove){
@@ -193,7 +202,10 @@ public abstract class Game  implements Serializable{
                 playerMove.setResult(MoveResult.RIGHT);
     }
     
-    public void save(){
+    public void quickSave(){
         FileIO.write("savedGame", new SavedGame(vector, this.defaultSheilds, this.grid, this.gameType));
+    }
+    public void save(String name){
+        FileIO.write(name, new SavedGame(vector, this.defaultSheilds, this.grid, this.gameType));
     }
 }

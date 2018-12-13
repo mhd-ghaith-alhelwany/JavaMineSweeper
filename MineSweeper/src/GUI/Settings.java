@@ -14,6 +14,7 @@ import java.io.Serializable;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -44,18 +45,25 @@ public class Settings extends JFrame implements Serializable{
         
         JPanel p = new JPanel();
         p.setBorder(new EmptyBorder(20, 20, 20, 20));
-        p.setLayout(new GridLayout(7, 1));
+        p.setLayout(new GridLayout(10, 1));
         
         JComboBox type = new JComboBox(GameType.values());
-        JButton save = new JButton("SAVE");
         
-        InputPanel lengthInput = new InputPanel("Length                  ", new JTextField());
-        InputPanel widthInput = new InputPanel("Width                    ", new JTextField());
-        InputPanel minesInput = new InputPanel("Mines                    ", new JTextField());
-        InputPanel sheildsInput = new InputPanel("Sheilds                 ", new JTextField());
-        InputPanel defaultSheildsInput = new InputPanel("Default Sheilds   ", new JTextField());
+        JButton startButton = new JButton("Start");
+        JButton loadButton = new JButton("Load");
+        JButton quickLoadButton = new JButton("Quick Load");
+        
+        InputPanel lengthInput = new InputPanel("Length                  ", new JTextField("10"));
+        InputPanel widthInput = new InputPanel("Width                    ", new JTextField("10"));
+        InputPanel minesInput = new InputPanel("Mines                    ", new JTextField("10"));
+        InputPanel sheildsInput = new InputPanel("Sheilds                 ", new JTextField("10"));
+        InputPanel defaultSheildsInput = new InputPanel("Default Sheilds   ", new JTextField("10"));
+        InputPanel nameInput = new InputPanel("Name                    ", new JTextField("Sharif"));
         InputPanel typeInput = new InputPanel("Type                      ", type);
-        InputPanel saveInput = new InputPanel("                               ", save);
+        InputPanel saveInput = new InputPanel("                               ", startButton);
+        InputPanel loadInput = new InputPanel("                               ", loadButton);
+        InputPanel quickLoadInput = new InputPanel("                               ", quickLoadButton);
+        
         
         p.add(lengthInput);
         p.add(widthInput);
@@ -63,12 +71,15 @@ public class Settings extends JFrame implements Serializable{
         p.add(sheildsInput);
         p.add(defaultSheildsInput);
         p.add(typeInput);
+        p.add(nameInput);
         p.add(saveInput);
+        p.add(loadInput);
+        p.add(quickLoadInput);
         
         this.add(p, BorderLayout.CENTER);
         this.setVisible(true);
         
-        save.addMouseListener(new MouseListener() {
+        startButton.addMouseListener(new MouseListener() {
             public void mousePressed(MouseEvent e) {
                 try{
                     int length = Integer.parseInt((String)lengthInput.getValue());
@@ -76,8 +87,9 @@ public class Settings extends JFrame implements Serializable{
                     int mines = Integer.parseInt((String)minesInput.getValue());
                     int sheilds = Integer.parseInt((String)sheildsInput.getValue());
                     int defaultSheilds = Integer.parseInt((String)defaultSheildsInput.getValue());
+                    String name = (String)nameInput.getValue();
                     GameType type = (GameType)typeInput.getValue();
-                    save(length, width, mines, sheilds, defaultSheilds, type);
+                    save(length, width, mines, sheilds, defaultSheilds, type, name);
                 }catch(Exception ex){
                     System.out.println("error");
                 }
@@ -87,11 +99,54 @@ public class Settings extends JFrame implements Serializable{
             public void mouseEntered(MouseEvent e) {}
             public void mouseExited(MouseEvent e) {}
         });
+        quickLoadButton.addMouseListener(new MouseListener() {
+            public void mousePressed(MouseEvent e) {
+                quickLoad();
+            }
+            public void mouseClicked(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {}
+        });
+        loadButton.addMouseListener(new MouseListener() {
+            public void mousePressed(MouseEvent e) {
+                load();
+            }
+            public void mouseClicked(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {}
+        });
     }
-    
-    public void save(int length, int width, int mines, int sheilds, int defaultSheilds, GameType type){
-        //GUIGame Game = new GUIGame(length, width, mines, sheilds, defaultSheilds, type);
-        new GUIGame(10, 10, 10, 10, 2,  GameType.EASY);
+    public void load(){
+        ChoosePath c = new ChoosePath();
+        SavedGame g = FileIO.read(c.getPath());
+        System.out.println(c.getPath());
+        new Thread() {
+            @Override
+            public void run() {
+                GUIGame Game = new GUIGame(g);
+            }
+        }.start();
+        this.dispose();
+    }
+    public void quickLoad(){
+        SavedGame g = FileIO.read("savedGame.bin");
+        new Thread() {
+            @Override
+            public void run() {
+                GUIGame Game = new GUIGame(g);
+            }
+        }.start();
+        this.dispose();
+    }
+    public void save(int length, int width, int mines, int sheilds, int defaultSheilds, GameType type, String name){
+        new Thread() {
+            @Override
+            public void run() {
+                GUIGame Game = new GUIGame(length, width, mines, sheilds, defaultSheilds, type, name);
+            }
+        }.start();
         this.dispose();
     }
     

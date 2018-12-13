@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class ConsoleGame extends Game implements Serializable{
 
     public ConsoleGame(int length, int width, int mines, int sheildsForPlayer, int sheilds, GameType gametype) {
-        super(length, width, mines, sheilds, sheildsForPlayer, gametype);
+        super(length, width, mines, sheilds, sheildsForPlayer, gametype, "Fdas");
     }
 
     @Override

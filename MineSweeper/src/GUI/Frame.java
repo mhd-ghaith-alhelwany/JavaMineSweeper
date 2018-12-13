@@ -27,9 +27,22 @@ public class Frame extends JFrame implements Serializable{
         this.add(label, BorderLayout.SOUTH);
         
         JButton saveButton = new JButton("Save");
+        JButton quickSaveButton = new JButton("Quick Save");
+        
+        quickSaveButton.addMouseListener(new MouseListener() {
+            public void mouseClicked(MouseEvent e) {
+                g.quickSave();
+            }
+            public void mousePressed(MouseEvent e){}
+            public void mouseReleased(MouseEvent e){}
+            public void mouseEntered(MouseEvent e){}
+            public void mouseExited(MouseEvent e){}
+        });
+        
         saveButton.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
-                g.save();
+                ChoosePath c = new ChoosePath();
+                g.save(c.getPath());
             }
             public void mousePressed(MouseEvent e){}
             public void mouseReleased(MouseEvent e){}
@@ -38,6 +51,7 @@ public class Frame extends JFrame implements Serializable{
         });
         JPanel buttons = new JPanel();
         buttons.add(saveButton);
+        buttons.add(quickSaveButton);
         this.add(buttons, BorderLayout.NORTH);
         
         this.setVisible(true);

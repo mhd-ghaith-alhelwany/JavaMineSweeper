@@ -61,9 +61,11 @@ public class Square extends JPanel implements MouseListener, Serializable{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        g.getPlayingPlayer().setPlayerMove(new PlayerMove(e.getButton() == 1? MoveType.OPEN: g.getGrid().getSquare(place.i, place.j).getSquareStatus() == SquareStatus.CLOSED? MoveType.FLAG : MoveType.UNFLAG, place));
-        g.MainThread.interrupt();
-        g.updateGame();
+        if(!g.lock){
+            g.getPlayingPlayer().setPlayerMove(new PlayerMove(e.getButton() == 1? MoveType.OPEN: g.getGrid().getSquare(place.i, place.j).getSquareStatus() == SquareStatus.CLOSED? MoveType.FLAG : MoveType.UNFLAG, place));
+            g.MainThread.interrupt();
+            g.updateGame();
+        }
     }
 
     @Override

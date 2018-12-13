@@ -8,6 +8,7 @@ import minesweeper.SquarePlace;
  *
  * @author Ghaith
  */
+
 public class PlayerMoveLog implements Serializable{ 
     public MoveType moveType;
     public SquarePlace squarePlace;

@@ -8,7 +8,10 @@ package minesweeper;
 import GUI.Frame;
 import GUI.Settings;
 import java.io.Serializable;
+import logs.FileIO;
 import logs.SavedGame;
+import logs.ScoreLog;
+import logs.ScoreLogVector;
 
 /**
  *
@@ -16,8 +19,8 @@ import logs.SavedGame;
  */
 public class GUIGame extends Game implements Serializable{
     Frame f;
-    public GUIGame(int length, int width, int mines, int sheilds, int sheildsForPlayer, GameType gametype) {
-        super(length, width, mines, sheilds, sheildsForPlayer, gametype);
+    public GUIGame(int length, int width, int mines, int sheilds, int sheildsForPlayer, GameType gametype, String name) {
+        super(length, width, mines, sheilds, sheildsForPlayer, gametype, name);
     }
     public GUIGame(SavedGame s){
         super(s);
@@ -31,7 +34,9 @@ public class GUIGame extends Game implements Serializable{
 
     @Override
     public void finishGame() {
-        
+        ScoreLogVector scoreboard = FileIO.readScoreboard("scoreboard.bin");
+        scoreboard.vector.add(new ScoreLog(this.player1.getScore().getScore(), this.name));
+        FileIO.writeScoreboard("scoreboard", scoreboard);
     }
 
     @Override

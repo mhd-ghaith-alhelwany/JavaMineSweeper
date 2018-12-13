@@ -6,7 +6,8 @@ import java.io.Serializable;
  *
  * @author Ghaith
  */
-public abstract class Player  implements Serializable{
+public abstract class Player 
+{
     private Color color;
     private PlayerStatus status;
     private Score score;
